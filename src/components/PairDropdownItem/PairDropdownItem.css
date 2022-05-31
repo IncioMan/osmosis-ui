@@ -1,0 +1,53 @@
+.dd-item-asset-container{
+    display: flex;
+    width: 40%;
+    justify-content: flex-end;
+}
+
+.dd-item-asset-container-to{
+    display: flex;
+    width: 40%;
+    justify-content: flex-start;
+}
+
+.dd-suggest-container:hover {
+    opacity: 1;
+}
+
+.dd-suggest-container:focus:active {
+    opacity: 0.5;
+}
+
+.dd-suggest-container:focus {
+    opacity: 1;
+    border-bottom: solid;
+}
+
+.dd-suggest-asset {
+    margin: 5px 0px;
+}
+
+.dd-suggest-logo {
+    padding-left: 10px;
+    height: 50px;
+    width: 50px;
+}
+
+.dd-suggest-logo-to {
+    padding-right: 10px;
+    height: 50px;
+    width: 50px;
+}
+
+.dd-suggest-arrow{
+    padding: 0px 10px;
+}
+
+.dd-suggest-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    cursor: pointer;
+    opacity: 0.5;
+    font-size: 20px;
+}

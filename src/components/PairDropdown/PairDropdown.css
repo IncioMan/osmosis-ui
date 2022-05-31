@@ -1,0 +1,39 @@
+.dropdown-list-container{
+  position: absolute;
+  z-index: 1;
+  margin-top: 2px;
+  max-height: 300px;
+  overflow-y: auto;
+  width: 300px;
+  left: calc(50% - 150px);
+  background: #190f34;
+}
+
+.dd-list-item{
+    padding-top: 3px;
+    width: 100%;
+    color: white;
+    border: none;
+    height: 54px;
+}
+
+.dd-input {
+    background: transparent;
+    text-align: center;
+    border-bottom: solid;
+    outline: none;
+    font-size: 25px;
+}
+
+.dd-list-item:focus-visible{
+  outline: none;
+}
+
+.dd-suggest-container{
+  margin: 0px 13px;
+}
+
+.dd-suggest-container:focus-visible{
+  outline: none;
+  border-bottom-style: solid;
+}
