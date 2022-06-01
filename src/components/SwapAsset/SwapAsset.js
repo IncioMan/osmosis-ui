@@ -21,7 +21,7 @@ const theme = extendTheme({
 
 
 function SwapAsset(props) {
-  const {assetFrom, asset, amount, price, enterHandler, focusHandler} = props
+  const {assetFrom, asset, amount, price, enterHandler, focusHandler, onChangeHandler} = props
   const {appStage, setAppStage} = useContext(AppStageContext)
   const amountRef = useRef()
 
@@ -37,6 +37,7 @@ function SwapAsset(props) {
         <Flex flexDirection={'column'} pt={10} justifyContent={'center'} alignItems={'center'}>
           <input className='asset-from-input' type="number" id="quantity"
           ref={amountRef}
+          onChange={onChangeHandler}
           onFocus={focusHandler}
           onKeyUp = {(e) =>{
               if (e.key === 'Enter') {
