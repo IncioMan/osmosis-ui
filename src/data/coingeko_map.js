@@ -11,23 +11,18 @@ export const coingeko_ids = {
         id:'cosmos'
     },
     'USDC':{
-        
-        id:''
+        id:'usd-coin'
     },
     'wETH':{
-        
         id:'ethereum'
     },
     'wBTC':{
-        
         id:'bitcoin'
     },
     'CRO':{
-        
-        id:''
+        id:'crypto-com-chain'
     },
     'JUNO':{
-        
-        id:''
+        id:'juno-network'
     }
 }

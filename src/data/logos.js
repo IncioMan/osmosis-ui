@@ -18,7 +18,7 @@ export const logos = {
     },
     'USDC':{
         icon: 'https://app.osmosis.zone/_next/image?url=%2Ftokens%2Fusdc.svg&w=64&q=75',
-        padding: 0,
+        padding: 2,
         correction: 0
     },
     'wETH':{
@@ -33,7 +33,7 @@ export const logos = {
     },
     'CRO':{
         icon: 'https://cryptologos.cc/logos/crypto-com-coin-cro-logo.svg?v=022',
-        padding: 2,
+        padding: 0,
         correction: 0
     },
     'JUNO':{
