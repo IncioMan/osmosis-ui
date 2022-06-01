@@ -7,7 +7,8 @@ import AppStageContext from '../../context/AppStageContext';
 
 export default function PairDropdown() {
     
-    const tokens = ['ATOM','OSMO','LUNA','USDC']
+    const tokens = ['ATOM','OSMO','LUNA',
+                    'USDC','JUNO']
     const availablePairs = []
     tokens.forEach(element1 => {
         tokens.forEach(element2=>{
