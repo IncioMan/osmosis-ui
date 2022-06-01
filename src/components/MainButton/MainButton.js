@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Box, Button, Spinner, Text} from '@chakra-ui/react'
 import AppStageContext from '../../context/AppStageContext';
 import { useToast } from '@chakra-ui/react'
+import KeplrContext from '../../context/KeplrContext';
 
 
 
@@ -12,6 +13,7 @@ function MainButton(props) {
   const [buttonText, setButtonText] = useState('')
   const swapButtonRef = useRef(null);
   const {appStage, setAppStage} = useContext(AppStageContext)
+  const {keplrValue, setKeplrValue} = useContext(KeplrContext)
   const [waiting, setWaiting] = useState(false)
   const [address, setAddress] = useState()
   const toast = useToast()
@@ -46,6 +48,7 @@ function MainButton(props) {
         })
       }
       if(accounts.length>0){
+        setKeplrValue(window.keplr)
         toast({
           title: 'Wallet connected',
           description: accounts[0].address,

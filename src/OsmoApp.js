@@ -6,40 +6,45 @@ import AppStageContext from './context/AppStageContext';
 import SwapContext from './context/SwapContext';
 import PairDropdown from './components/PairDropdown/PairDropdown';
 import MainButton from './components/MainButton/MainButton';
+import KeplrContext from './context/KeplrContext';
+import { useSearchParams } from 'react-router-dom';
 
 const appInitialStage = 'search'
-const initialSwapContext = 
-{
-    assetFrom:{
-        token: 'OSMO',
-        amount: 0
-    },
-    assetTo: {
-        token: 'ATOM'
-    }
-}
 
 function OsmoApp() {
-  const [swapContextValue, setSwapContextValue] = useState(initialSwapContext)
   const [appStage, setAppStage] = useState('searchPair')
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [keplrValue, setKeplrValue] = useState()
 
-
+  const initialSwapContext = 
+    {
+        assetFrom:{
+            token: searchParams.get("from")?searchParams.get("from"):'OSMO',
+            amount: 0
+        },
+        assetTo: {
+            token: searchParams.get("to")?searchParams.get("to"):'ATOM',
+        }
+    }
+    const [swapContextValue, setSwapContextValue] = useState(initialSwapContext)
 
   return (
     <AppStageContext.Provider value={{appStage, setAppStage}}>
         <SwapContext.Provider value={{swapContextValue, setSwapContextValue}}>
-            <Box textAlign="center" fontSize="xl">
-                <Flex  minH="100vh" alignItems={'center'} justifyContent={'center'} p={3}>
-                <Box >
-                    <PairDropdown/>
-                    <Box h={8}/>
-                    <SwapContainer/>
-                    <Box pt={16}>
-                        <MainButton />
+            <KeplrContext.Provider value={{keplrValue, setKeplrValue}}>
+                <Box textAlign="center" fontSize="xl">
+                    <Flex  minH="100vh" alignItems={'center'} justifyContent={'center'} p={3}>
+                    <Box >
+                        <PairDropdown/>
+                        <Box h={8}/>
+                        <SwapContainer/>
+                        <Box pt={16}>
+                            <MainButton />
+                        </Box>
                     </Box>
+                    </Flex>
                 </Box>
-                </Flex>
-            </Box>
+            </KeplrContext.Provider>
         </SwapContext.Provider>
     </AppStageContext.Provider>
   );

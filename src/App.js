@@ -4,6 +4,7 @@ import { extendTheme } from '@chakra-ui/react'
 import { mode } from '@chakra-ui/theme-tools';
 import './App.css';
 import OsmoApp from './OsmoApp';
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 const styles = {
   global: props => ({
@@ -22,7 +23,11 @@ const theme = extendTheme({
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <OsmoApp/>
+      <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<OsmoApp />} />
+        </Routes>
+      </BrowserRouter>
     </ChakraProvider>
   );
 }
