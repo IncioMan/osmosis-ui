@@ -12,11 +12,11 @@ import { useSearchParams } from 'react-router-dom';
 const appInitialStage = 'search'
 
 function OsmoApp() {
-  const [appStage, setAppStage] = useState('searchPair')
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [keplrValue, setKeplrValue] = useState()
+    const [appStage, setAppStage] = useState('searchPair')
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [keplrValue, setKeplrValue] = useState()
 
-  const initialSwapContext = 
+    const initialSwapContext = 
     {
         assetFrom:{
             token: searchParams.get("from")?searchParams.get("from"):'OSMO',
@@ -28,7 +28,21 @@ function OsmoApp() {
     }
     const [swapContextValue, setSwapContextValue] = useState(initialSwapContext)
 
-  return (
+    function insertUrlParam(key, value) {
+        if (window.history.pushState) {
+            let searchParams = new URLSearchParams(window.location.search);
+            searchParams.set(key, value);
+            let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
+            window.history.pushState({path: newurl}, '', newurl);
+        }
+    }
+
+    useEffect(()=>{
+        insertUrlParam("from", swapContextValue.assetFrom.token ? swapContextValue.assetFrom.token:'OSMO')
+        insertUrlParam("to", swapContextValue.assetTo.token?swapContextValue.assetTo.token:'ATOM')
+    }, [swapContextValue])
+
+    return (
     <AppStageContext.Provider value={{appStage, setAppStage}}>
         <SwapContext.Provider value={{swapContextValue, setSwapContextValue}}>
             <KeplrContext.Provider value={{keplrValue, setKeplrValue}}>
