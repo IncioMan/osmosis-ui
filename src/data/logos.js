@@ -1,36 +1,44 @@
 export const logos = {
     'OSMO': {
         icon: 'https://app.osmosis.zone/_next/image?url=%2Ftokens%2Fosmo.svg&w=64&q=75',
-        padding: 0
+        padding: 0,
+        correction: 0
     },
     'LUNA': 
     {
         icon: 'https://frontier.osmosis.zone/public/assets/tokens/luna.svg',
-        padding: 0
+        padding: 0,
+        correction: 0
     },
     'ATOM': 
     {
         icon: 'https://frontier.osmosis.zone/public/assets/tokens/atom.svg',
-        padding: 2
+        padding: 2,
+        correction: 0
     },
     'USDC':{
         icon: 'https://app.osmosis.zone/_next/image?url=%2Ftokens%2Fusdc.svg&w=64&q=75',
-        padding: 2
+        padding: 2,
+        correction: 0
     },
     'wETH':{
-        icon: 'https://app.osmosis.zone/_next/image?url=%2Ftokens%2Fweth.png&w=64&q=75',
-        padding: 2
+        icon: 'https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=022',
+        padding: 4,
+        correction: -4
     },
     'wBTC':{
-        icon: 'https://app.osmosis.zone/_next/image?url=%2Ftokens%2Fwbtc.png&w=64&q=75',
-        padding: 2
+        icon: 'https://cryptologos.cc/logos/wrapped-bitcoin-wbtc-logo.svg?v=022',
+        padding: 4,
+        correction: 4
     },
     'CRO':{
-        icon: 'https://app.osmosis.zone/_next/image?url=%2Ftokens%2Fcro.png&w=64&q=75',
-        padding: 2
+        icon: 'https://cryptologos.cc/logos/crypto-com-coin-cro-logo.svg?v=022',
+        padding: 2,
+        correction: 0
     },
     'JUNO':{
         icon: 'https://app.osmosis.zone/_next/image?url=%2Ftokens%2Fjuno.svg&w=96&q=75',
-        padding: 2
+        padding: 2,
+        correction: 0
     }
 }

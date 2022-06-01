@@ -56,7 +56,9 @@ function SwapAsset(props) {
         {(assetFrom)&&<Box w={8}/>}
         <Image
           borderRadius='lg'
-          width={[12,12,16]}
+          width={[12+logos[asset].correction,
+                  12+logos[asset].correction,
+                  16+logos[asset].correction]}
           src={logos[asset].icon}
           alt={asset}
           pt={logos[asset].padding}
