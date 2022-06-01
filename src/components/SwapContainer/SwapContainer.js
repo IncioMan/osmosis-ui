@@ -1,5 +1,5 @@
 import React, { useContext, useDeferredValue, useEffect, useState } from 'react';
-import {Flex,Text} from '@chakra-ui/react'
+import {Flex,Button} from '@chakra-ui/react'
 import SwapAsset from '../SwapAsset/SwapAsset';
 import SwapContext from '../../context/SwapContext';
 import AppStageContext from '../../context/AppStageContext';
@@ -57,6 +57,17 @@ function SwapContainer(props) {
     setAppStage('clickSwap')
   }
 
+  const invertAssets = () =>{
+    const newState = {
+      assetFrom:{
+        token: swapContextValue.assetTo.token,
+        amount: swapContextValue.assetFrom.amount,
+      },
+      assetTo: swapContextValue.assetFrom
+    }
+    setSwapContextValue(newState)
+  }
+
   const onChangeHandler = (e) =>{
     const newState = {
       assetFrom:{
@@ -69,13 +80,27 @@ function SwapContainer(props) {
   }
   return (
     <Flex flexWrap={'wrap'}>
-      <SwapAsset assetFrom={true} asset={swapContextValue.assetFrom.token} 
+      <SwapAsset 
+              assetFrom={true} asset={swapContextValue.assetFrom.token} 
               price={priceAssetFrom}
               enterHandler={enterHandler}
               focusHandler={()=>{setAppStage('enterAmount')}}
               onChangeHandler={(e) => onChangeHandler(e)}/>
       <Flex width={['100%','auto']} pt={[4,12]} justifyContent={'center'}>
-        <Text tabIndex={0} className='arrow-swap' fontSize={40} pt={2} pr={4} pl={4}>&#8594;</Text>
+        <Button 
+            tabIndex={0} 
+            className='arrow-swap' 
+            bg={'transparent'}
+            fontSize={40} p={4} m={4}
+            _hover={{
+              background: 'transparent'
+            }}
+            onClick={(e)=>{
+              invertAssets()
+            }}
+        >
+          &#8594;
+        </Button>
       </Flex>
       <SwapAsset assetFrom={false} asset={swapContextValue.assetTo.token} amount={amountAssetTo} price={priceAssetTo}/>
     </Flex>

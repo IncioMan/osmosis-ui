@@ -4,7 +4,7 @@ export const coingeko_ids = {
     },
     'LUNA': 
     {
-        id:'terra-luna'
+        id:'terra-luna-2'
     },
     'ATOM': 
     {

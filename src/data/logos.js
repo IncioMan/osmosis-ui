@@ -7,28 +7,28 @@ export const logos = {
     'LUNA': 
     {
         icon: 'https://frontier.osmosis.zone/public/assets/tokens/luna.svg',
-        padding: 2,
+        padding: 0,
         correction: 0
     },
     'ATOM': 
     {
         icon: 'https://frontier.osmosis.zone/public/assets/tokens/atom.svg',
-        padding: 2,
+        padding: 0,
         correction: 0
     },
     'USDC':{
         icon: 'https://app.osmosis.zone/_next/image?url=%2Ftokens%2Fusdc.svg&w=64&q=75',
-        padding: 2,
+        padding: 0,
         correction: 0
     },
     'wETH':{
         icon: 'https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=022',
-        padding: 4,
+        padding: 2,
         correction: -4
     },
     'wBTC':{
         icon: 'https://cryptologos.cc/logos/wrapped-bitcoin-wbtc-logo.svg?v=022',
-        padding: 4,
+        padding: 2,
         correction: 4
     },
     'CRO':{

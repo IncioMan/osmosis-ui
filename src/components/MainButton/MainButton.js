@@ -34,7 +34,7 @@ function MainButton(props) {
     }else{
       let accounts = []
       try{
-        const chainId = "osmosis-1"
+        const chainId = "osmo-test-4"
         await window.keplr.enable(chainId);
         const offlineSigner = window.keplr.getOfflineSigner(chainId);
         accounts = await offlineSigner.getAccounts();
@@ -72,6 +72,7 @@ function MainButton(props) {
   {(!waiting)&& 
   <>
   <Button 
+      tabIndex={1} 
       bg={'#322dc1'} 
       fontSize={20}
       borderRadius={24}
