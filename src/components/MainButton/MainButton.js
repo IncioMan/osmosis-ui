@@ -30,10 +30,21 @@ function MainButton(props) {
         window.open("https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap", "_blank")
       }])
     }else{
-      const chainId = "osmosis-1"
-      await window.keplr.enable(chainId);
-      const offlineSigner = window.keplr.getOfflineSigner(chainId);
-      const accounts = await offlineSigner.getAccounts();
+      let accounts = []
+      try{
+        const chainId = "osmosis-1"
+        await window.keplr.enable(chainId);
+        const offlineSigner = window.keplr.getOfflineSigner(chainId);
+        accounts = await offlineSigner.getAccounts();
+      }catch(e){
+        toast({
+          title: 'No address detected',
+          description: 'You need to log into your Keplr extension',
+          status: 'error',
+          duration: 4000,
+          isClosable: false,
+        })
+      }
       if(accounts.length>0){
         toast({
           title: 'Wallet connected',

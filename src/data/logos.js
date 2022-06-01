@@ -7,7 +7,7 @@ export const logos = {
     'LUNA': 
     {
         icon: 'https://frontier.osmosis.zone/public/assets/tokens/luna.svg',
-        padding: 0,
+        padding: 2,
         correction: 0
     },
     'ATOM': 
