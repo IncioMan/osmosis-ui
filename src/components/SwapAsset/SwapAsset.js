@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ChakraProvider, Box,Flex,Image,Text} from '@chakra-ui/react'
 import { extendTheme } from '@chakra-ui/react'
 import { mode } from '@chakra-ui/theme-tools';
@@ -21,7 +21,7 @@ const theme = extendTheme({
 
 
 function SwapAsset(props) {
-  const {assetFrom, asset, amount, enterHandler, focusHandler} = props
+  const {assetFrom, asset, amount, price, enterHandler, focusHandler} = props
   const {appStage, setAppStage} = useContext(AppStageContext)
   const amountRef = useRef()
 
@@ -30,7 +30,6 @@ function SwapAsset(props) {
       amountRef.current.focus()
     }
   },[appStage])
-
 
   return (
       <Flex width={['100%','auto']} justifyContent={'center'}>
@@ -50,7 +49,7 @@ function SwapAsset(props) {
             textAlign={'center'}
             w={'90%'} 
             opacity={0.5} 
-            fontSize={14}>1 {asset} = $1.45</Text>
+            fontSize={14}>1 {asset} = ${price}</Text>
           </Flex>
         }
         {(assetFrom)&&<Box w={8}/>}
@@ -71,7 +70,7 @@ function SwapAsset(props) {
             textAlign={'center'}
             w={'90%'} 
             opacity={0.5} 
-            fontSize={14}>1 {asset} = $15</Text>
+            fontSize={14}>1 {asset} = ${price}</Text>
           </Flex>
         }
       </Flex>
