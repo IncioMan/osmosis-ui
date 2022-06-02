@@ -3,6 +3,7 @@ import {Flex,Button} from '@chakra-ui/react'
 import SwapAsset from '../SwapAsset/SwapAsset';
 import SwapContext from '../../context/SwapContext';
 import AppStageContext from '../../context/AppStageContext';
+import PriceProvider from '../../utils/PriceProvider';
 import {coingeko_ids} from '../../data/coingeko_map'
 const axios = require('axios').default;
 
@@ -14,21 +15,18 @@ function SwapContainer(props) {
   const [amountAssetTo, setAmountAssetTo] = useState(0)
 
   useEffect(()=>{
-    axios.get("https://api.coingecko.com/api/v3/simple/price?ids="+
-              coingeko_ids[swapContextValue.assetFrom.token].id+
-              "&vs_currencies=USD")
-        .then(function (response) {
-          setPriceAssetFrom(response.data[coingeko_ids[swapContextValue.assetFrom.token].id].usd)
+    const pr = new PriceProvider()
+    pr.myGetPrice(swapContextValue.assetFrom.token)
+        .then(function (price) {
+          setPriceAssetFrom(price)
         })
         .catch(function (error) {
             setPriceAssetFrom('')
             console.log(error);
         })
-    axios.get("https://api.coingecko.com/api/v3/simple/price?ids="+
-              coingeko_ids[swapContextValue.assetTo.token].id+
-              "&vs_currencies=USD")
-        .then(function (response) {
-          setPriceAssetTo(response.data[coingeko_ids[swapContextValue.assetTo.token].id].usd)
+    pr.myGetPrice(swapContextValue.assetTo.token)
+        .then(function (price) {
+          setPriceAssetTo(price)
         })
         .catch(function (error) {
             setPriceAssetTo('')
