@@ -3,10 +3,7 @@ import { Box, Button, Spinner, Text} from '@chakra-ui/react'
 import AppStageContext from '../../context/AppStageContext';
 import { useToast } from '@chakra-ui/react'
 import KeplrContext from '../../context/KeplrContext';
-import {prices} from '../../utils/ex'
-
-
-
+import { prices } from '../../utils/ex'
 
 function MainButton(props) {
   const [onEnter, setOnEnter] = useState([() => {}])

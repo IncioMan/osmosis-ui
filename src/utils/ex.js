@@ -15,4 +15,5 @@ async function setupApp () {
     prices = await getPricesFromCoinGecko();
 }
 setupApp()
-export default prices;
+
+export { prices };
