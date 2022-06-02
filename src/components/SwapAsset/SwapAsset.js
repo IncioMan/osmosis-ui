@@ -21,7 +21,7 @@ const theme = extendTheme({
 
 
 function SwapAsset(props) {
-  const {assetFrom, asset, amount, price, enterHandler, focusHandler, onChangeHandler} = props
+  const {assetFrom, asset, amount, balance, price, enterHandler, focusHandler, onChangeHandler} = props
   const {appStage, setAppStage} = useContext(AppStageContext)
   const amountRef = useRef()
 
@@ -34,7 +34,13 @@ function SwapAsset(props) {
   return (
       <Flex width={['100%','auto']} justifyContent={'center'}>
       {(assetFrom)&&
-        <Flex flexDirection={'column'} pt={10} justifyContent={'center'} alignItems={'center'}>
+        <Flex flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
+          <Text 
+            pt = {0}
+            textAlign={'center'}
+            w={'90%'} 
+            opacity={0.5} 
+            fontSize={14}>{balance/1000000}</Text>
           <input className='asset-from-input' type="number" id="quantity"
           ref={amountRef}
           tabIndex={1} 

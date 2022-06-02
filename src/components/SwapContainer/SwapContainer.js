@@ -4,7 +4,7 @@ import SwapAsset from '../SwapAsset/SwapAsset';
 import SwapContext from '../../context/SwapContext';
 import AppStageContext from '../../context/AppStageContext';
 import PriceProvider from '../../utils/PriceProvider';
-import {coingeko_ids} from '../../data/coingeko_map'
+import KeplrContext from '../../context/KeplrContext';
 const axios = require('axios').default;
 
 function SwapContainer(props) {
@@ -12,7 +12,10 @@ function SwapContainer(props) {
   const {appStage, setAppStage} = useContext(AppStageContext)
   const [priceAssetTo, setPriceAssetTo] = useState()
   const [priceAssetFrom, setPriceAssetFrom] = useState()
+  const [balanceAssetTo, setBalanceAssetTo] = useState()
+  const [balanceAssetFrom, setBalanceAssetFrom] = useState()
   const [amountAssetTo, setAmountAssetTo] = useState(0)
+  const {keplrValue, setKeplrValue} = useContext(KeplrContext)
 
   useEffect(()=>{
     const pr = new PriceProvider()
@@ -34,6 +37,29 @@ function SwapContainer(props) {
         })
     updateAmountAssetTo()
   },[swapContextValue])
+
+  useEffect(()=>{
+    if(!keplrValue||!keplrValue.accounts){
+      return
+    }
+    const pr = new PriceProvider()
+    pr.getBalance(keplrValue?.accounts[0].address, swapContextValue.assetFrom.token)
+    .then(function (balance) {
+      setBalanceAssetFrom(balance?balance:0)
+    })
+    .catch(function (error) {
+      setBalanceAssetFrom(0)
+        console.log(error);
+    })
+    pr.getBalance(keplrValue?.accounts[0].address, swapContextValue.assetTo.token)
+      .then(function (balance) {
+        setBalanceAssetTo(balance?balance:0)
+      })
+      .catch(function (error) {
+        setBalanceAssetTo(0)
+          console.log(error);
+      })
+  },[swapContextValue, keplrValue])
 
   const updateAmountAssetTo = ()=>{
     const value = swapContextValue.assetFrom.amount*priceAssetFrom/priceAssetTo
@@ -79,8 +105,10 @@ function SwapContainer(props) {
   return (
     <Flex flexWrap={'wrap'}>
       <SwapAsset 
-              assetFrom={true} asset={swapContextValue.assetFrom.token} 
+              assetFrom={true} 
+              asset={swapContextValue.assetFrom.token} 
               price={priceAssetFrom}
+              balance={balanceAssetFrom}
               enterHandler={enterHandler}
               focusHandler={()=>{setAppStage('enterAmount')}}
               onChangeHandler={(e) => onChangeHandler(e)}/>
@@ -100,7 +128,12 @@ function SwapContainer(props) {
           &#8594;
         </Button>
       </Flex>
-      <SwapAsset assetFrom={false} asset={swapContextValue.assetTo.token} amount={amountAssetTo} price={priceAssetTo}/>
+      <SwapAsset 
+        assetFrom={false} 
+        asset={swapContextValue.assetTo.token} 
+        amount={amountAssetTo} 
+        balance={balanceAssetTo}
+        price={priceAssetTo}/>
     </Flex>
   );
 }
