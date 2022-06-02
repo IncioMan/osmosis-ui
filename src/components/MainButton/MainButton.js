@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Box, Button, Spinner, Text} from '@chakra-ui/react'
 import AppStageContext from '../../context/AppStageContext';
-import { useToast } from '@chakra-ui/react'
 import KeplrContext from '../../context/KeplrContext';
 
 function MainButton(props) {
@@ -13,7 +12,6 @@ function MainButton(props) {
   const {keplrValue, setKeplrValue} = useContext(KeplrContext)
   const [waiting, setWaiting] = useState(false)
   const [address, setAddress] = useState()
-  const toast = useToast()
 
   useEffect(()=>{
     console.log(appStage)
@@ -22,47 +20,25 @@ function MainButton(props) {
     }
   },[appStage])
 
-  window.onload = async () => {
-    if(!window.keplr){
+  useEffect(()=>{
+    if(!keplrValue.wallet){
       setButtonText('Install Keplr')
       setOnClick([()=>{
         window.open("https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap", "_blank")
       }])
-    }else{
-      let accounts = []
-      try{
-        const chainId = "osmo-test-4"
-        await window.keplr.enable(chainId);
-        const offlineSigner = window.keplr.getOfflineSigner(chainId);
-        accounts = await offlineSigner.getAccounts();
-      }catch(e){
-        toast({
-          title: 'No address detected',
-          description: 'You need to log into your Keplr extension',
-          status: 'error',
-          duration: 4000,
-          isClosable: false,
-        })
-      }
-      if(accounts.length>0){
-        setKeplrValue(window.keplr)
-        toast({
-          title: 'Wallet connected',
-          description: accounts[0].address,
-          status: 'success',
-          duration: 4000,
-          isClosable: false,
-        })
-        setButtonText('SWAP')
-        setAddress(accounts[0])
-        setOnClick([(e)=>{
-          setWaiting(true)
-        }])
-      }else{
-        setButtonText('Connect Wallet')
-        setOnClick([()=>{console.log('connect')}])
-      }}
-  }
+      return
+    }
+    if(keplrValue.accounts&&keplrValue.accounts.length>0){
+      setButtonText('SWAP')
+      setAddress(keplrValue.accounts[0])
+      setOnClick([(e)=>{
+        setWaiting(true)
+      }])
+      return
+    }
+    setButtonText('Retry')
+    setOnClick([()=>{window.location.reload(false)}])
+  },[keplrValue])
 
   return (
   <>
