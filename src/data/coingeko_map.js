@@ -24,5 +24,8 @@ export const coingeko_ids = {
     },
     'JUNO':{
         id:'juno-network'
+    },
+    'EVMOS':{
+        id:'evmos'
     }
 }

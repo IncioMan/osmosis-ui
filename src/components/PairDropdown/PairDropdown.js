@@ -9,7 +9,7 @@ export default function PairDropdown() {
     
     const tokens = ['ATOM','OSMO','LUNA',
                     'USDC','JUNO','wBTC',
-                    'wETH','CRO']
+                    'wETH','CRO','EVMOS']
     const availablePairs = []
     tokens.forEach(element1 => {
         tokens.forEach(element2=>{

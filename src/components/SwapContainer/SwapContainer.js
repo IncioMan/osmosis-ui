@@ -86,7 +86,7 @@ function SwapContainer(props) {
               enterHandler={enterHandler}
               focusHandler={()=>{setAppStage('enterAmount')}}
               onChangeHandler={(e) => onChangeHandler(e)}/>
-      <Flex width={['100%','auto']} pt={[4,12]} justifyContent={'center'}>
+      <Flex width={['100%','auto']} pt={[4,8]} justifyContent={'center'}>
         <Button 
             tabIndex={0} 
             className='arrow-swap' 

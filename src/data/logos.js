@@ -6,13 +6,13 @@ export const logos = {
     },
     'LUNA': 
     {
-        icon: 'https://frontier.osmosis.zone/public/assets/tokens/luna.svg',
+        icon: 'https://frontier.osmosis.zone/_next/image?url=%2Ftokens%2Fluna.svg&w=96&q=75',
         padding: 0,
         correction: 0
     },
     'ATOM': 
     {
-        icon: 'https://frontier.osmosis.zone/public/assets/tokens/atom.svg',
+        icon: 'https://app.osmosis.zone/_next/image?url=%2Ftokens%2Fatom.svg&w=96&q=75',
         padding: 0,
         correction: 0
     },
@@ -39,6 +39,11 @@ export const logos = {
     'JUNO':{
         icon: 'https://app.osmosis.zone/_next/image?url=%2Ftokens%2Fjuno.svg&w=96&q=75',
         padding: 2,
+        correction: 0
+    },
+    'EVMOS':{
+        icon: 'https://app.osmosis.zone/_next/image?url=%2Ftokens%2Fevmos.svg&w=96&q=75',
+        padding: 0,
         correction: 0
     }
 }

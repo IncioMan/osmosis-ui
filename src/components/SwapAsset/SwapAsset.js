@@ -32,7 +32,7 @@ function SwapAsset(props) {
   },[appStage])
 
   return (
-      <Flex width={['100%','auto']} justifyContent={'center'} pt={assetFrom?'':2}>
+      <Flex width={['100%','auto']} justifyContent={'center'}>
       {(assetFrom)&&
         <Flex flexDirection={'column'} pt={10} justifyContent={'center'} alignItems={'center'}>
           <input className='asset-from-input' type="number" id="quantity"
