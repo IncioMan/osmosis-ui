@@ -21,7 +21,8 @@ const theme = extendTheme({
 
 
 function SwapAsset(props) {
-  const {assetFrom, asset, amount, balance, price, enterHandler, focusHandler, onChangeHandler} = props
+  const {assetFrom, asset, amount, balance, price, 
+        inputAmountHandler, enterHandler, focusHandler, onChangeHandler} = props
   const {appStage, setAppStage} = useContext(AppStageContext)
   const amountRef = useRef()
 
@@ -47,10 +48,15 @@ function SwapAsset(props) {
               textAlign={'center'}
               w={'90%'} 
               opacity={0.5} 
+              _hover={{
+                cursor: 'pointer'
+              }}
+              onClick={()=>{inputAmountHandler(balance/1000000)}}
               fontSize={14}>{balance/1000000}</Text>}
           <input className='asset-from-input' type="number" id="quantity"
           ref={amountRef}
           tabIndex={1} 
+          value={amount>0?amount:null}
           onChange={onChangeHandler}
           onFocus={focusHandler}
           onKeyUp = {(e) =>{

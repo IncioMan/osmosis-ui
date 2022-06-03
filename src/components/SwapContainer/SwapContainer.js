@@ -95,10 +95,14 @@ function SwapContainer(props) {
   }
 
   const onChangeHandler = (e) =>{
+    setAmountAssetFrom(e.target.value)
+  }
+
+  const setAmountAssetFrom = (amount)=>{
     const newState = {
       assetFrom:{
         token: swapContextValue.assetFrom.token,
-        amount: e.target.value
+        amount: amount
       },
       assetTo: swapContextValue.assetTo
     }
@@ -108,9 +112,11 @@ function SwapContainer(props) {
     <Flex flexWrap={'wrap'}>
       <SwapAsset 
               assetFrom={true} 
-              asset={swapContextValue.assetFrom.token} 
+              asset={swapContextValue.assetFrom.token}
+              amount={swapContextValue.assetFrom.amount} 
               price={priceAssetFrom}
               balance={balanceAssetFrom}
+              inputAmountHandler={(amount)=>setAmountAssetFrom(amount)}
               enterHandler={enterHandler}
               focusHandler={()=>{setAppStage('enterAmount')}}
               onChangeHandler={(e) => onChangeHandler(e)}/>
