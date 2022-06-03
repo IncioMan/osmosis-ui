@@ -36,7 +36,10 @@ function SwapAsset(props) {
       {(assetFrom)&&
         <Flex flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
           {(!balance && balance!==0)&&
-            <Spinner opacity={0.5} size={'xs'} paddingBottom={4}/>
+            <>
+              <Spinner opacity={0.5} size={'xs'}/>
+              <Box height={2}/>
+            </>
           }
           {(balance||balance===0)&&
             <Text 
