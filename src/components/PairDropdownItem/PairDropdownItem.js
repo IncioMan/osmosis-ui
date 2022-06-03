@@ -13,11 +13,13 @@ export default function PairDropdownItem(props) {
         <div onClick={onClick} on onKeyDown={onKeyDown} onKeyUp={onKeyUp} tabIndex="2" ref={itemRef} className='dd-suggest-container'>
             <div className='dd-item-asset-container'>
                 <p className='dd-suggest-asset'>{asset1}</p>
-                <img className='dd-suggest-logo' src={logo1} width="40" height="40" alt="Italian Trulli"></img>
+                {(logo1.endsWith('.svg'))&&<img className='dd-suggest-logo-svg' src={logo1}></img>}
+                {(logo1.endsWith('.png'))&&<img className='dd-suggest-logo-png' src={logo1}></img>}
             </div>
             <div className='dd-suggest-arrow'>&rarr;</div>
             <div className='dd-item-asset-container-to'>
-                <img className='dd-suggest-logo-to' src={logo2}  width="40" height="40" alt="Italian Trulli"></img>
+                {(logo2.endsWith('.svg'))&&<img className='dd-suggest-logo-to-svg' src={logo2}></img>}
+                {(logo2.endsWith('.png'))&&<img className='dd-suggest-logo-to-png' src={logo2}></img>}
                 <p className='dd-suggest-asset'>{asset2}</p>
             </div>
         </div>
