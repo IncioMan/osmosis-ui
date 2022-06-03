@@ -1,5 +1,5 @@
 export const assetsList = {
-    "chain_id": "osmosis-1",
+    "chain_id": "osmo-test-4",
     "assets": [
       {
         "description": "The native token of Osmosis",

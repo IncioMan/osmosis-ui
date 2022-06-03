@@ -54,7 +54,7 @@ function SwapAsset(props) {
               onClick={()=>{inputAmountHandler(balance)}}
               fontSize={14}>{balance}</Text>}
           <input 
-          className={'asset-from-input '+((amount&&balance&&amount>balance)?'input-error':'')}
+          className={'asset-from-input '+(((balance||balance===0)&&amount&&amount>balance)?'input-error':'')}
           type="number" 
           id="quantity"
           ref={amountRef}
@@ -91,7 +91,7 @@ function SwapAsset(props) {
           />
         </Flex>
         {(!assetFrom)&&
-        <Flex flexDirection={'column'} pt={10} justifyContent={'center'} alignItems={'center'}>
+        <Flex flexDirection={'column'} pt={8} justifyContent={'center'} alignItems={'center'}>
           <Text fontSize={40} p={1} w={170}>{amount}</Text>
           <Text 
             pt = {0}

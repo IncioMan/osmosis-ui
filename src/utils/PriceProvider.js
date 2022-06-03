@@ -14,7 +14,7 @@ export default class PriceProvider{
 
             // 'https://lcd-osmosis.keplr.app/'
         this.client = new OsmosisApiClient({
-            url: 'https://lcd-osmosis.keplr.app/'
+            url: 'https://testnet-rest.osmosis.zone/'
         });
     }
 

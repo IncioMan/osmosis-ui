@@ -1,7 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Box, Button, Spinner, Text} from '@chakra-ui/react'
+import { Box, Button, Spinner, Link, Flex, Text} from '@chakra-ui/react'
 import AppStageContext from '../../context/AppStageContext';
 import KeplrContext from '../../context/KeplrContext';
+import SwapContext from '../../context/SwapContext';
+import SwapProvider from '../../utils/SwapProvider';
+import { useToast } from '@chakra-ui/react'
+import { ExternalLinkIcon } from '@chakra-ui/icons'
 
 function MainButton(props) {
   const [onEnter, setOnEnter] = useState([() => {}])
@@ -10,8 +14,10 @@ function MainButton(props) {
   const swapButtonRef = useRef(null);
   const {appStage, setAppStage} = useContext(AppStageContext)
   const {keplrValue, setKeplrValue} = useContext(KeplrContext)
+  const {swapContextValue, setSwapContextValue} = useContext(SwapContext)
   const [waiting, setWaiting] = useState(false)
   const [address, setAddress] = useState()
+  const toast = useToast()
 
   useEffect(()=>{
     console.log(appStage)
@@ -19,6 +25,10 @@ function MainButton(props) {
         swapButtonRef.current.focus()
     }
   },[appStage])
+
+  useEffect(()=>{
+    console.log(swapContextValue)
+  },[swapContextValue])
 
   useEffect(()=>{
     if(!keplrValue.wallet){
@@ -33,12 +43,43 @@ function MainButton(props) {
       setAddress(keplrValue.accounts[0])
       setOnClick([(e)=>{
         setWaiting(true)
+        const sp = new SwapProvider(keplrValue.accounts[0], keplrValue.wallet.getOfflineSigner('osmo-test-4'))
+        const res = sp.swap(swapContextValue.assetFrom.token,swapContextValue.assetTo.token, swapContextValue.assetFrom.amount)
+        res.then((r)=>{
+            toast({
+              position: 'bottom',
+              title: 'Swap Success',
+              render: () => (
+                <Flex 
+                  flexDirection={'column'} 
+                  color='black' 
+                  borderRadius={8}
+                  p={3} bg='green.200'>
+                  <Text fontSize='md' fontWeight={'bold'} lineHeight={6}>Swap Executed</Text>
+                  <Link href={'https://www.mintscan.io/osmosis/txs/'+r.transactionHash} isExternal>
+                    {r.transactionHash.slice(0,5)+'...'+r.transactionHash.slice(-5)} <ExternalLinkIcon mx='2px' />
+                  </Link>
+                </Flex>
+              ),
+            })
+        }).catch((e)=>{
+          console.log(e)
+          toast({
+            title: 'Swap Not Excuted',
+            description: e.message,
+            status: 'error',
+            duration: 4000,
+            isClosable: false,
+          })
+        }).finally(()=>{
+          setWaiting(false)
+        })
       }])
       return
     }
     setButtonText('Retry')
     setOnClick([()=>{window.location.reload(false)}])
-  },[keplrValue])
+  },[keplrValue, swapContextValue])
 
   return (
   <>
