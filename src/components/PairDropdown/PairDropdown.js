@@ -1,15 +1,16 @@
 import React, { useContext, useRef, useState  } from 'react';
 import PairDropdownItem from '../PairDropdownItem/PairDropdownItem'
 import './PairDropdown.css'
-import { logos } from '../../data/logos';
+import TokenProvider from '../../utils/TokenProvider';
 import SwapContext from '../../context/SwapContext';
 import AppStageContext from '../../context/AppStageContext';
 
 export default function PairDropdown() {
     
-    const tokens = ['ATOM','OSMO','LUNA',
-                    'USDC','JUNO','wBTC',
-                    'wETH','CRO','EVMOS']
+    const tp = new TokenProvider()
+    const tokens = ['ATOM','OSMO','CMDX',
+                    'axlUSDC','JUNO','axlWBTC',
+                    'axlWETH','CRO','EVMOS']
     const availablePairs = []
     tokens.forEach(element1 => {
         tokens.forEach(element2=>{
@@ -37,7 +38,7 @@ export default function PairDropdown() {
     const [focusedOption, setFocusedOption] = useState(-1)
     const {swapContextValue, setSwapContextValue} = useContext(SwapContext)
     const {appStage, setAppStage} = useContext(AppStageContext)
-    let inputRef = useRef();
+    let inputRef = useRef();    
 
     const processInput = (text) => {
         const textCleaned = text.replace(' ','')
@@ -129,9 +130,9 @@ export default function PairDropdown() {
                     <div className="dd-list-item">
                         <PairDropdownItem 
                                 asset1={pair.from.symbol}
-                                logo1={logos[pair.from.symbol].icon}
+                                logo1={tp.assets[pair.from.symbol].icon}
                                 asset2={pair.to.symbol}
-                                logo2={logos[pair.to.symbol].icon}
+                                logo2={tp.assets[pair.to.symbol].icon}
                                 focused={pair.focused}
                                 onClick={() => {
                                     setState(pair)

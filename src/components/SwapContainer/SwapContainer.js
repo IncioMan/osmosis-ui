@@ -5,7 +5,7 @@ import SwapContext from '../../context/SwapContext';
 import AppStageContext from '../../context/AppStageContext';
 import PriceProvider from '../../utils/PriceProvider';
 import KeplrContext from '../../context/KeplrContext';
-const axios = require('axios').default;
+import TokenProvider from '../../utils/TokenProvider';
 
 function SwapContainer(props) {
   const {swapContextValue, setSwapContextValue} = useContext(SwapContext)
@@ -16,6 +16,8 @@ function SwapContainer(props) {
   const [balanceAssetFrom, setBalanceAssetFrom] = useState()
   const [amountAssetTo, setAmountAssetTo] = useState(0)
   const {keplrValue, setKeplrValue} = useContext(KeplrContext)
+  const tp = new TokenProvider()
+  let exponent = 0
 
   useEffect(()=>{
     const pr = new PriceProvider()
@@ -47,7 +49,15 @@ function SwapContainer(props) {
     setBalanceAssetTo(null)
     pr.getBalance(keplrValue?.accounts[0].address, swapContextValue.assetFrom.token)
     .then(function (balance) {
-      setBalanceAssetFrom(balance?balance:0)
+      exponent = Math.pow(10,tp.assets[swapContextValue.assetFrom.token].exponent)
+      let expBalance = balance?balance/exponent:0
+      let roundedBalance = expBalance
+      if(expBalance&&expBalance>1){
+        roundedBalance = Math.round(expBalance*100)/100
+      }else{
+        roundedBalance = Math.round(expBalance*1000000)/1000000
+      }
+      setBalanceAssetFrom(roundedBalance)
     })
     .catch(function (error) {
       setBalanceAssetFrom(0)
@@ -115,7 +125,7 @@ function SwapContainer(props) {
               asset={swapContextValue.assetFrom.token}
               amount={swapContextValue.assetFrom.amount} 
               price={priceAssetFrom}
-              balance={balanceAssetFrom}
+              balance={(exponent&&exponent>0)?balanceAssetFrom/exponent:balanceAssetFrom}
               inputAmountHandler={(amount)=>setAmountAssetFrom(amount)}
               enterHandler={enterHandler}
               focusHandler={()=>{setAppStage('enterAmount')}}
