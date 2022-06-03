@@ -8,13 +8,50 @@ import PairDropdown from './components/PairDropdown/PairDropdown';
 import MainButton from './components/MainButton/MainButton';
 import KeplrContext from './context/KeplrContext';
 import { useSearchParams } from 'react-router-dom';
+import { useToast } from '@chakra-ui/react'
 
 const appInitialStage = 'search'
 
 function OsmoApp() {
     const [appStage, setAppStage] = useState('searchPair')
     const [searchParams, setSearchParams] = useSearchParams();
-    const [keplrValue, setKeplrValue] = useState()
+    const [keplrValue, setKeplrValue] = useState({wallet:null,accounts:null})
+    const toast = useToast()
+
+    window.onload = async () =>
+    {
+        if(!window.keplr){
+            setKeplrValue({wallet:null, accounts:null})
+            return
+        }
+        
+        let accounts = []
+        try{
+            const chainId = "osmo-test-4"
+            await window.keplr.enable(chainId);
+            const offlineSigner = window.keplr.getOfflineSigner(chainId);
+            accounts = await offlineSigner.getAccounts();
+        }catch(e){
+            toast({
+            title: 'No address detected',
+            description: 'You need to log into your Keplr extension and reload the page',
+            status: 'error',
+            duration: 4000,
+            isClosable: false,
+            })
+            setKeplrValue({wallet:window.keplr,accounts:null})
+        }
+        if(accounts.length>0){
+            setKeplrValue({wallet:window.keplr,accounts:accounts})
+            toast({
+            title: 'Wallet connected',
+            description: accounts[0].address,
+            status: 'success',
+            duration: 4000,
+            isClosable: false,
+            })
+        }
+    }
 
     const initialSwapContext = 
     {
