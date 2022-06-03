@@ -1,4 +1,14 @@
-.asset-from-input-error {
+.asset-from-input {
+    background: transparent;
+    text-align: center;
+    border-bottom: solid;
+    font-size: 40px;
+    /* padding: 0px; */
+    outline: none;
+    width: 140px;
+}
+
+.input-error {
     background: transparent;
     text-align: center;
     border-bottom: solid;
@@ -7,16 +17,6 @@
     outline: none;
     width: 140px;
     color: #EF3456;
-}
-
-.asset-from-input-ok {
-    background: transparent;
-    text-align: center;
-    border-bottom: solid;
-    font-size: 40px;
-    /* padding: 0px; */
-    outline: none;
-    width: 140px;
 }
 
 .arrow-swap {
