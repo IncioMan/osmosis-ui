@@ -53,7 +53,10 @@ function SwapAsset(props) {
               }}
               onClick={()=>{inputAmountHandler(balance)}}
               fontSize={14}>{balance}</Text>}
-          <input className='asset-from-input' type="number" id="quantity"
+          <input 
+          className={(amount&&balance&&amount>balance)?'asset-from-input-error':'asset-from-input-ok'}
+          type="number" 
+          id="quantity"
           ref={amountRef}
           tabIndex={1} 
           value={amount>0?amount:null}
