@@ -27,7 +27,7 @@ function OsmoApp() {
         
         let accounts = []
         try{
-            const chainId = "osmo-test-4"
+            const chainId = "osmosis-1"
             await window.keplr.enable(chainId);
             const offlineSigner = window.keplr.getOfflineSigner(chainId);
             accounts = await offlineSigner.getAccounts();
