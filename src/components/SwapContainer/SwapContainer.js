@@ -43,6 +43,8 @@ function SwapContainer(props) {
       return
     }
     const pr = new PriceProvider()
+    setBalanceAssetFrom(null)
+    setBalanceAssetTo(null)
     pr.getBalance(keplrValue?.accounts[0].address, swapContextValue.assetFrom.token)
     .then(function (balance) {
       setBalanceAssetFrom(balance?balance:0)

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { ChakraProvider, Box,Flex,Image,Text} from '@chakra-ui/react'
+import { ChakraProvider, Box,Flex,Image,Text, Spinner} from '@chakra-ui/react'
 import { extendTheme } from '@chakra-ui/react'
 import { mode } from '@chakra-ui/theme-tools';
 import './SwapAsset.css'
@@ -35,12 +35,16 @@ function SwapAsset(props) {
       <Flex width={['100%','auto']} justifyContent={'center'}>
       {(assetFrom)&&
         <Flex flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
-          <Text 
-            pt = {0}
-            textAlign={'center'}
-            w={'90%'} 
-            opacity={0.5} 
-            fontSize={14}>{balance/1000000}</Text>
+          {(!balance && balance!==0)&&
+            <Spinner opacity={0.5} size={'xs'} paddingBottom={4}/>
+          }
+          {(balance||balance===0)&&
+            <Text 
+              pt = {0}
+              textAlign={'center'}
+              w={'90%'} 
+              opacity={0.5} 
+              fontSize={14}>{balance/1000000}</Text>}
           <input className='asset-from-input' type="number" id="quantity"
           ref={amountRef}
           tabIndex={1} 
