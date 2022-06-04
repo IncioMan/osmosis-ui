@@ -5,7 +5,7 @@ import KeplrContext from '../../context/KeplrContext';
 import SwapContext from '../../context/SwapContext';
 import SwapProvider from '../../utils/SwapProvider';
 import { useToast } from '@chakra-ui/react'
-import { ExternalLinkIcon } from '@chakra-ui/icons'
+import { ExternalLinkIcon,CheckCircleIcon } from '@chakra-ui/icons'
 
 function MainButton(props) {
   const [onEnter, setOnEnter] = useState([() => {}])
@@ -30,6 +30,40 @@ function MainButton(props) {
     console.log(swapContextValue)
   },[swapContextValue])
 
+  const showSwapNotExecuted = (errorMsg) => {
+    toast({
+      title: 'Swap Not Excuted',
+      description: errorMsg,
+      status: 'error',
+      duration: 6000,
+      isClosable: false,
+    })
+  }
+
+  const showSuccessSwap = (txHash, swapMsg)=>{
+    toast({
+      position: 'bottom',
+      duration: 6000,
+      isClosable: false,
+      render: () => (
+        <Flex
+        flexDirection={'row'}
+        color='white' 
+        borderRadius={8}
+        p={3} bg='green.500'>
+          <CheckCircleIcon w={5} h={6} mt='2px' marginInlineEnd={3}/>
+          <Flex 
+            flexDirection={'column'} >
+            <Text fontSize='md' fontWeight={'bold'} lineHeight={6}>Swap Executed</Text>
+            <Link fontSize={16} href={'https://www.mintscan.io/osmosis/txs/'+txHash} isExternal>
+              {swapMsg}<ExternalLinkIcon mx='2px' />
+            </Link>
+          </Flex>
+        </Flex>
+      ),
+    })
+  }
+
   useEffect(()=>{
     if(!keplrValue.wallet){
       setButtonText('Install Keplr')
@@ -50,45 +84,17 @@ function MainButton(props) {
               .then((txInfo)=>{
                 console.log(txInfo)
                 if(!txInfo.logs){
-                  toast({
-                    title: 'Swap Not Excuted',
-                    description: txInfo.raw_log,
-                    status: 'error',
-                    duration: 6000,
-                    isClosable: false,
-                  })
+                  showSwapNotExecuted(txInfo.raw_log)
                   return
                 }
                 const swapMsg = sp.parseSwapTx(txInfo)
-                toast({
-                  position: 'bottom',
-                  duration: 6000,
-                  isClosable: false,
-                  render: () => (
-                    <Flex 
-                      flexDirection={'column'} 
-                      color='white' 
-                      borderRadius={8}
-                      p={3} bg='green.500'>
-                      <Text fontSize='md' fontWeight={'bold'} lineHeight={6}>Swap Executed</Text>
-                      <Link fontSize={16} href={'https://www.mintscan.io/osmosis/txs/'+r.transactionHash} isExternal>
-                        {swapMsg}<ExternalLinkIcon mx='2px' />
-                      </Link>
-                    </Flex>
-                  ),
-                })
+                showSuccessSwap(r.transactionHash, swapMsg)
               }).catch((e)=>{
                 console.log(e)
               })
         }).catch((e)=>{
           console.log(e)
-          toast({
-            title: 'Swap Not Excuted',
-            description: e.message,
-            status: 'error',
-            duration: 6000,
-            isClosable: false,
-          })
+          showSwapNotExecuted(e.message)
         }).finally(()=>{
           setWaiting(false)
         })
