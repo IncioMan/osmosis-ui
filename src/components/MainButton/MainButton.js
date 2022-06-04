@@ -30,6 +30,19 @@ function MainButton(props) {
     console.log(swapContextValue)
   },[swapContextValue])
 
+  const refreshSwapContext = ()=>{
+    const newState = {
+      assetFrom: {
+        token: swapContextValue.assetFrom.token,
+        amount: swapContextValue.assetFrom.amount
+      },
+      assetTo:{
+        token: swapContextValue.assetTo.token
+      }
+    }
+    setSwapContextValue(newState)
+  }
+
   const showSwapNotExecuted = (errorMsg) => {
     toast({
       title: 'Swap Not Excuted',
@@ -89,6 +102,7 @@ function MainButton(props) {
                 }
                 const swapMsg = sp.parseSwapTx(txInfo)
                 showSuccessSwap(r.transactionHash, swapMsg)
+                refreshSwapContext()
               }).catch((e)=>{
                 console.log(e)
               })
