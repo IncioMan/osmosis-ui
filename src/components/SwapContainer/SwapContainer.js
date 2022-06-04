@@ -6,6 +6,7 @@ import AppStageContext from '../../context/AppStageContext';
 import PriceProvider from '../../utils/PriceProvider';
 import KeplrContext from '../../context/KeplrContext';
 import TokenProvider from '../../utils/TokenProvider';
+import Networkontext from '../../context/NetworkContext';
 
 function SwapContainer(props) {
   const {swapContextValue, setSwapContextValue} = useContext(SwapContext)
@@ -16,11 +17,12 @@ function SwapContainer(props) {
   const [balanceAssetFrom, setBalanceAssetFrom] = useState()
   const [amountAssetTo, setAmountAssetTo] = useState(0)
   const {keplrValue, setKeplrValue} = useContext(KeplrContext)
+  const {networkValue, setNetworkValue} = useContext(Networkontext)
   const tp = new TokenProvider()
   let exponent = 0
 
   useEffect(()=>{
-    const pr = new PriceProvider()
+    const pr = new PriceProvider(networkValue.lcd)
     pr.myGetPrice(swapContextValue.assetFrom.token)
         .then(function (price) {
           setPriceAssetFrom(price)
@@ -38,13 +40,13 @@ function SwapContainer(props) {
             console.log(error);
         })
     updateAmountAssetTo()
-  },[swapContextValue])
+  },[swapContextValue, networkValue])
 
   useEffect(()=>{
     if(!keplrValue||!keplrValue.accounts){
       return
     }
-    const pr = new PriceProvider()
+    const pr = new PriceProvider(networkValue.lcd)
     setBalanceAssetFrom(null)
     setBalanceAssetTo(null)
     pr.getBalance(keplrValue?.accounts[0].address, swapContextValue.assetFrom.token)
@@ -71,7 +73,7 @@ function SwapContainer(props) {
         setBalanceAssetTo(0)
           console.log(error);
       })
-  },[swapContextValue, keplrValue])
+  },[swapContextValue, keplrValue, networkValue])
 
   const updateAmountAssetTo = ()=>{
     const value = swapContextValue.assetFrom.amount*priceAssetFrom/priceAssetTo

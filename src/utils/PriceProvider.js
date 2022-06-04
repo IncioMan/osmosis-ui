@@ -7,14 +7,14 @@ import {
 import { OsmosisApiClient } from '@cosmology/core';
 
 export default class PriceProvider{
-    constructor() {
+    constructor(lcdUrl) {
         this.tokensMap = {}
         tokens.forEach((t)=>this.tokensMap[t.symbol]=t.denom)
         console.log(this.tokensMap)
 
             // 'https://lcd-osmosis.keplr.app/'
         this.client = new OsmosisApiClient({
-            url: 'https://testnet-rest.osmosis.zone/'
+            url: lcdUrl
         });
     }
 

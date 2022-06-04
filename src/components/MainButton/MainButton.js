@@ -3,6 +3,7 @@ import { Box, Button, Spinner, Link, Flex, Text} from '@chakra-ui/react'
 import AppStageContext from '../../context/AppStageContext';
 import KeplrContext from '../../context/KeplrContext';
 import SwapContext from '../../context/SwapContext';
+import NetworkContext from '../../context/NetworkContext';
 import SwapProvider from '../../utils/SwapProvider';
 import { useToast } from '@chakra-ui/react'
 import { ExternalLinkIcon,CheckCircleIcon } from '@chakra-ui/icons'
@@ -15,6 +16,7 @@ function MainButton(props) {
   const {appStage, setAppStage} = useContext(AppStageContext)
   const {keplrValue, setKeplrValue} = useContext(KeplrContext)
   const {swapContextValue, setSwapContextValue} = useContext(SwapContext)
+  const {networkValue, setNetworkValue} = useContext(NetworkContext)
   const [waiting, setWaiting] = useState(false)
   const [address, setAddress] = useState()
   const toast = useToast()
@@ -90,7 +92,10 @@ function MainButton(props) {
       setAddress(keplrValue.accounts[0])
       setOnClick([(e)=>{
         setWaiting(true)
-        const sp = new SwapProvider(keplrValue.accounts[0], keplrValue.wallet.getOfflineSigner('osmo-test-4'))
+        const sp = new SwapProvider(keplrValue.accounts[0], 
+                                    keplrValue.wallet.getOfflineSigner('osmo-test-4'),
+                                    networkValue.lcd,
+                                    networkValue.rpc)
         const res = sp.swap(swapContextValue.assetFrom.token,swapContextValue.assetTo.token, swapContextValue.assetFrom.amount)
         res.then((r)=>{
             sp.getTxInfo(r.transactionHash)

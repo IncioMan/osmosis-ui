@@ -24,12 +24,13 @@ import TokenProvider from './TokenProvider';
 
 
 export default class SwapProvider{
-    constructor(address, signer) {
+    constructor(address, signer, lcdUrl, rpcUrl) {
         this.address = address
         this.signer = signer
         this.client = new OsmosisApiClient({
-            url: 'https://testnet-rest.osmosis.zone/'
+            url: lcdUrl
         });
+        this.rpcUrl = rpcUrl
         this.tokenProvider = new TokenProvider()
     }
 
@@ -37,7 +38,7 @@ export default class SwapProvider{
         const slippage = 0.1
         const stargateClient = await getSigningOsmosisClient({
             //https://rpc.osmosis.zone/
-            rpcEndpoint: 'https://testnet-rpc.osmosis.zone/',
+            rpcEndpoint: this.rpcUrl,
             signer: this.signer // OfflineSigner
         });
         const prices = await getPricesFromCoinGecko();

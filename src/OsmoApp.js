@@ -7,8 +7,11 @@ import SwapContext from './context/SwapContext';
 import PairDropdown from './components/PairDropdown/PairDropdown';
 import MainButton from './components/MainButton/MainButton';
 import KeplrContext from './context/KeplrContext';
+import NetworkContext from './context/NetworkContext';
 import { useSearchParams } from 'react-router-dom';
 import { useToast } from '@chakra-ui/react'
+import { Switch, FormControl, FormLabel} from '@chakra-ui/react'
+
 
 const appInitialStage = 'search'
 
@@ -16,6 +19,19 @@ function OsmoApp() {
     const [appStage, setAppStage] = useState('searchPair')
     const [searchParams, setSearchParams] = useSearchParams();
     const [keplrValue, setKeplrValue] = useState({wallet:null,accounts:null})
+    const mainnet = 
+    {
+        chainId: 'osmosis-1',
+        rpc: 'https://rpc.osmosis.zone/', 
+        lcd: 'https://lcd.osmosis.zone/'
+    }
+    const testnet = 
+    {
+        chainId: 'osmo-test-4',
+        rpc: 'https://testnet-rpc.osmosis.zone/', 
+        lcd: 'https://testnet-rest.osmosis.zone/'
+    }
+    const [networkValue, setNetworkValue] = useState(testnet)
     const toast = useToast()
 
     window.onload = async () =>
@@ -27,7 +43,7 @@ function OsmoApp() {
         
         let accounts = []
         try{
-            const chainId = "osmo-test-4"
+            const chainId = networkValue.chainId
             await window.keplr.enable(chainId);
             const offlineSigner = window.keplr.getOfflineSigner(chainId);
             accounts = await offlineSigner.getAccounts();
@@ -83,18 +99,37 @@ function OsmoApp() {
     <AppStageContext.Provider value={{appStage, setAppStage}}>
         <SwapContext.Provider value={{swapContextValue, setSwapContextValue}}>
             <KeplrContext.Provider value={{keplrValue, setKeplrValue}}>
-                <Box textAlign="center" fontSize="xl">
-                    <Flex  minH="100vh" alignItems={'center'} justifyContent={'center'} p={3}>
-                    <Box >
-                        <PairDropdown/>
-                        <Box h={8}/>
-                        <SwapContainer/>
-                        <Box pt={16}>
-                            <MainButton />
+                <NetworkContext.Provider value={{networkValue, setNetworkValue}}>
+                    <Box textAlign="center" fontSize="xl">
+                        <Flex  minH="100vh" alignItems={'center'} justifyContent={'center'} p={3}>
+                        <Box >
+                            <PairDropdown/>
+                            <Box h={8}/>
+                            <SwapContainer/>
+                            <Box pt={16}>
+                                <MainButton />
+                            </Box>
+                        </Box>
+                        </Flex>
+                        <Box position={'absolute'} w={'100%'} top={[2,8,12]} right={[2,8,12]}>
+                            <FormControl display='flex' alignItems='center' justifyContent={'end'}>
+                                <FormLabel htmlFor='emaeil-alerts' mb='0'>
+                                    Mainnet
+                                </FormLabel>
+                                <Switch id='email-alerts'
+                                        colorScheme={'gray'}
+                                        onChange={(e)=>{
+                                            if(e.target.checked){
+                                                setNetworkValue(mainnet)
+                                            }else{
+                                                setNetworkValue(testnet)
+                                            }
+                                        }} 
+                                        value={true}/>
+                            </FormControl>
                         </Box>
                     </Box>
-                    </Flex>
-                </Box>
+                </NetworkContext.Provider>
             </KeplrContext.Provider>
         </SwapContext.Provider>
     </AppStageContext.Provider>
