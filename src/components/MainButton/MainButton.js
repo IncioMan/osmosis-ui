@@ -46,30 +46,47 @@ function MainButton(props) {
         const sp = new SwapProvider(keplrValue.accounts[0], keplrValue.wallet.getOfflineSigner('osmo-test-4'))
         const res = sp.swap(swapContextValue.assetFrom.token,swapContextValue.assetTo.token, swapContextValue.assetFrom.amount)
         res.then((r)=>{
-            toast({
-              position: 'bottom',
-              duration: 4000,
-              isClosable: false,
-              render: () => (
-                <Flex 
-                  flexDirection={'column'} 
-                  color='black' 
-                  borderRadius={8}
-                  p={3} bg='green.200'>
-                  <Text fontSize='md' fontWeight={'bold'} lineHeight={6}>Swap Executed</Text>
-                  <Link href={'https://www.mintscan.io/osmosis/txs/'+r.transactionHash} isExternal>
-                    {r.transactionHash.slice(0,10)+'...'+r.transactionHash.slice(-10)} <ExternalLinkIcon mx='2px' />
-                  </Link>
-                </Flex>
-              ),
-            })
+            sp.getTxInfo(r.transactionHash)
+              .then((txInfo)=>{
+                console.log(txInfo)
+                if(!txInfo.logs){
+                  toast({
+                    title: 'Swap Not Excuted',
+                    description: txInfo.raw_log,
+                    status: 'error',
+                    duration: 6000,
+                    isClosable: false,
+                  })
+                  return
+                }
+                const swapMsg = sp.parseSwapTx(txInfo)
+                toast({
+                  position: 'bottom',
+                  duration: 6000,
+                  isClosable: false,
+                  render: () => (
+                    <Flex 
+                      flexDirection={'column'} 
+                      color='black' 
+                      borderRadius={8}
+                      p={3} bg='green.200'>
+                      <Text fontSize='md' fontWeight={'bold'} lineHeight={6}>Swap Executed</Text>
+                      <Link fontSize={16} href={'https://www.mintscan.io/osmosis/txs/'+r.transactionHash} isExternal>
+                        {swapMsg}<ExternalLinkIcon mx='2px' />
+                      </Link>
+                    </Flex>
+                  ),
+                })
+              }).catch((e)=>{
+                console.log(e)
+              })
         }).catch((e)=>{
           console.log(e)
           toast({
             title: 'Swap Not Excuted',
             description: e.message,
             status: 'error',
-            duration: 4000,
+            duration: 6000,
             isClosable: false,
           })
         }).finally(()=>{

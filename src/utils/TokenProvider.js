@@ -12,4 +12,9 @@ export default class TokenProvider{
        })
        console.log(this.assets)
     }
+
+    formatAmount(token, amount){
+        const div = Math.pow(10,this.assets[token].exponent)
+        return amount/div
+    }
 }

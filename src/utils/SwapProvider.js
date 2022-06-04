@@ -17,8 +17,10 @@ import {
   getPricesFromCoinGecko,
   getOsmoFee,
   OsmosisApiClient,
-  getSigningOsmosisClient
+  getSigningOsmosisClient,
+  CosmosApiClient 
 } from '@cosmology/core';
+import TokenProvider from './TokenProvider';
 
 
 export default class SwapProvider{
@@ -28,6 +30,7 @@ export default class SwapProvider{
         this.client = new OsmosisApiClient({
             url: 'https://testnet-rest.osmosis.zone/'
         });
+        this.tokenProvider = new TokenProvider()
     }
 
    async swap(sell, buy, value){
@@ -152,5 +155,45 @@ export default class SwapProvider{
 
         console.log(res);
         return res
+    }
+
+    async getTxInfo(txHash){
+        const cs = new CosmosApiClient({url:'https://testnet-rest.osmosis.zone/'});
+        const txInfo = await cs.getTransaction(txHash)
+        return txInfo
+    }
+
+    parseTokenAmount(str){
+        let token = ''
+        let amount = ''
+        if(str.includes('ibc')){
+            amount = this.tokenProvider.formatAmount(osmoDenomToSymbol('ibc'+str.split('ibc')[1]), 
+                                                     parseInt(str.split('ibc')[0]))
+            token = osmoDenomToSymbol('ibc'+str.split('ibc')[1])
+        }
+        ['uosmo','uion'].forEach((t)=>{
+            if(str.includes(t)){
+                amount = this.tokenProvider.formatAmount(osmoDenomToSymbol(t), parseInt(str.replace(t,'')))
+                token = osmoDenomToSymbol(t)
+            }
+        })
+
+        return [token, amount]
+    }
+
+    parseSwapTx(txMsg){
+        let recap = ''
+        const logs = txMsg.logs[0].events.filter((e)=>e.type=='token_swapped')
+        const tokensIn = logs[0].attributes.find((t)=>t.key=="tokens_in")
+        const [tokenInToken, tokenInAmount] = this.parseTokenAmount(tokensIn.value)
+        const tokensOut = logs[0].attributes.filter((t)=>t.key=="tokens_out")
+        const tokensOutParsed = tokensOut.map((t)=>this.parseTokenAmount(t.value))
+
+
+        recap = tokenInAmount + ' ' + tokenInToken
+        tokensOutParsed.forEach((t)=>{
+            recap += ' → ' + t[1] + ' ' + t[0]
+        })
+        return recap
     }
 }

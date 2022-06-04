@@ -102,7 +102,7 @@ export default function PairDropdown() {
         setSwapContextValue(
             {assetFrom:{
                 token: pair.from.symbol,
-                amount: 0
+                amount: swapContextValue.assetFrom.amount
             },
             assetTo: {
                 token: pair.to.symbol
