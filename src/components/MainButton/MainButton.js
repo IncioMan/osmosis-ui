@@ -67,9 +67,9 @@ function MainButton(props) {
                   render: () => (
                     <Flex 
                       flexDirection={'column'} 
-                      color='black' 
+                      color='white' 
                       borderRadius={8}
-                      p={3} bg='green.200'>
+                      p={3} bg='green.500'>
                       <Text fontSize='md' fontWeight={'bold'} lineHeight={6}>Swap Executed</Text>
                       <Link fontSize={16} href={'https://www.mintscan.io/osmosis/txs/'+r.transactionHash} isExternal>
                         {swapMsg}<ExternalLinkIcon mx='2px' />
