@@ -17,4 +17,9 @@ export default class TokenProvider{
         const div = Math.pow(10,this.assets[token].exponent)
         return amount/div
     }
+
+    valueToDenomPrecision(token,value){
+        const factor = Math.pow(10,this.assets[token].exponent)
+        return value * factor
+    }
 }

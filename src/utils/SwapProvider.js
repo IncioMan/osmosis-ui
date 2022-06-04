@@ -45,27 +45,14 @@ export default class SwapProvider{
         const prettyPools = makePoolsPretty(prices, lcdPools.pools);
         const [account] = await this.signer.getAccounts();
         const { address } = account;
-        const accountBalances = await this.client.getBalances(account.address);
-        const balances = accountBalances.result.map(({ denom, amount }) => {
-            const symbol = osmoDenomToSymbol(denom);
-            return {
-            symbol,
-            denom,
-            amount
-            };
-        });
-        const tokenInBal = accountBalances.result.find(({ denom, amount }) => {
-        return osmoDenomToSymbol(denom) == sell;
-        });
     
         // get pricing and pools info...
         const pairs = makePoolPairs(prettyPools);
         const pools = lcdPools.pools.map((pool) => prettyPool(pool));
     
-        const usdValue = baseUnitsToDollarValue(prices, sell, tokenInBal.amount);
         const tokenInPrice = getPrice(prices, sell);
         //const tokenInAmount = value ? balances.find((a) => a.symbol === sell).amount : dollarValueToDenomUnits(prices, sell, value);
-        const tokenInAmount = value*1000000
+        const tokenInAmount = this.tokenProvider.valueToDenomPrecision(sell, value)
         const tokenOutPrice = getPrice(prices, buy);
         const tokenOutAmount = dollarValueToDenomUnits(prices, buy, value);
         const tokenOutAmountWithSlippage = calculateAmountWithSlippage(
