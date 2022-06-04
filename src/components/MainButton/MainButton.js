@@ -48,7 +48,8 @@ function MainButton(props) {
         res.then((r)=>{
             toast({
               position: 'bottom',
-              title: 'Swap Success',
+              duration: 4000,
+              isClosable: false,
               render: () => (
                 <Flex 
                   flexDirection={'column'} 
@@ -57,7 +58,7 @@ function MainButton(props) {
                   p={3} bg='green.200'>
                   <Text fontSize='md' fontWeight={'bold'} lineHeight={6}>Swap Executed</Text>
                   <Link href={'https://www.mintscan.io/osmosis/txs/'+r.transactionHash} isExternal>
-                    {r.transactionHash.slice(0,5)+'...'+r.transactionHash.slice(-5)} <ExternalLinkIcon mx='2px' />
+                    {r.transactionHash.slice(0,10)+'...'+r.transactionHash.slice(-10)} <ExternalLinkIcon mx='2px' />
                   </Link>
                 </Flex>
               ),
