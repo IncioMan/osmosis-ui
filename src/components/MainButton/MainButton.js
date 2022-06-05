@@ -95,7 +95,8 @@ function MainButton(props) {
         const sp = new SwapProvider(keplrValue.accounts[0], 
                                     keplrValue.wallet.getOfflineSignerOnlyAmino(networkValue.chainId),
                                     networkValue.lcd,
-                                    networkValue.rpc)
+                                    networkValue.rpc,
+                                    networkValue.chainId)
         const res = sp.swap(swapContextValue.assetFrom.token,swapContextValue.assetTo.token, swapContextValue.assetFrom.amount)
         res.then((r)=>{
             sp.getTxInfo(r.transactionHash)

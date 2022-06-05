@@ -24,13 +24,14 @@ import TokenProvider from './TokenProvider';
 
 
 export default class SwapProvider{
-    constructor(address, signer, lcdUrl, rpcUrl) {
+    constructor(address, signer, lcdUrl, rpcUrl, chainId) {
         this.address = address
         this.signer = signer
         this.client = new OsmosisApiClient({
             url: lcdUrl
         });
         this.rpcUrl = rpcUrl
+        this.chainId = chainId
         this.tokenProvider = new TokenProvider()
     }
 
@@ -134,7 +135,7 @@ export default class SwapProvider{
 
         const res = await signAndBroadcast({
             client: stargateClient,
-            chainId: 'osmo-test-4',
+            chainId: this.chainId,
             address,
             msg,
             fee,
