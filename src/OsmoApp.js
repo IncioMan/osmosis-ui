@@ -11,6 +11,9 @@ import NetworkContext from './context/NetworkContext';
 import { useSearchParams } from 'react-router-dom';
 import { useToast } from '@chakra-ui/react'
 import { Switch, FormControl, FormLabel} from '@chakra-ui/react'
+import { Icon,Link } from '@chakra-ui/react'
+import { FaTwitter, FaGithub } from 'react-icons/fa'
+
 
 
 const appInitialStage = 'search'
@@ -111,7 +114,7 @@ function OsmoApp() {
                             </Box>
                         </Box>
                         </Flex>
-                        <Box position={'absolute'} w={'100%'} top={[2,8,12]} right={[2,8,12]}>
+                        <Box position={'absolute'} w={'100%'} top={[4,8,12]} right={[4,8,12]}>
                             <FormControl display='flex' alignItems='center' justifyContent={'end'}>
                                 <FormLabel htmlFor='emaeil-alerts' mb='0'>
                                     Mainnet
@@ -128,6 +131,19 @@ function OsmoApp() {
                                         value={true}/>
                             </FormControl>
                         </Box>
+                        <Flex 
+                            justifyContent={'start'}
+                            position={'absolute'} 
+                            w={'100%'} 
+                            bottom={[4,8,12]} 
+                            left={[4,8,12]}>
+                            <Link href='https://twitter.com/IncioMan' isExternal>
+                                <Icon as={FaTwitter} w={6} h={6} />
+                            </Link>
+                            <Link href='https://github.com/IncioMan' isExternal>
+                                <Icon as={FaGithub} w={6} h={6} mx={4}/>
+                            </Link>
+                        </Flex>
                     </Box>
                 </NetworkContext.Provider>
             </KeplrContext.Provider>
