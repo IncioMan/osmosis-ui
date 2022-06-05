@@ -13,6 +13,16 @@ import { useToast } from '@chakra-ui/react'
 import { Switch, FormControl, FormLabel} from '@chakra-ui/react'
 import { Icon,Link } from '@chakra-ui/react'
 import { FaTwitter, FaGithub } from 'react-icons/fa'
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    Text
+  } from '@chakra-ui/react'
 
 
 
@@ -20,6 +30,7 @@ const appInitialStage = 'search'
 
 function OsmoApp() {
     const [appStage, setAppStage] = useState('searchPair')
+    const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(true)
     const [searchParams, setSearchParams] = useSearchParams();
     const [keplrValue, setKeplrValue] = useState({wallet:null,accounts:null})
     const mainnet = 
@@ -98,6 +109,34 @@ function OsmoApp() {
         insertUrlParam("to", swapContextValue.assetTo.token?swapContextValue.assetTo.token:'ATOM')
     }, [swapContextValue])
 
+    const disclaimer = ()=>{
+        return <Modal isCentered isOpen={isDisclaimerOpen} onClose={()=>setIsDisclaimerOpen(false)}>
+                    <ModalOverlay
+                        bg='blackAlpha.300'
+                        backdropFilter='blur(10px)'
+                        />
+                    <ModalContent>
+                    <ModalHeader>Disclaimer</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <Text>
+                            The code for this interface has not been audited and is simply the result
+                            of my passion for both programming and Osmosis.
+                        </Text>
+                        <Text>
+                            I decline any responsability in funds lost or swapped to wrong assets.
+                            Use at your own risk.
+                        </Text>
+                        <Text>
+                        Always double check the transaction before signing it.
+                        </Text>
+                    </ModalBody>
+                    <ModalFooter>
+                    </ModalFooter>
+                    </ModalContent>
+                </Modal>
+    }
+
     return (
     <AppStageContext.Provider value={{appStage, setAppStage}}>
         <SwapContext.Provider value={{swapContextValue, setSwapContextValue}}>
@@ -145,6 +184,7 @@ function OsmoApp() {
                             </Link>
                         </Flex>
                     </Box>
+                    {disclaimer()}
                 </NetworkContext.Provider>
             </KeplrContext.Provider>
         </SwapContext.Provider>

@@ -7,6 +7,10 @@ import PriceProvider from '../../utils/PriceProvider';
 import KeplrContext from '../../context/KeplrContext';
 import TokenProvider from '../../utils/TokenProvider';
 import Networkontext from '../../context/NetworkContext';
+import { Dec, Int, IntPretty } from '@keplr-wallet/unit';
+import {baseUnitsToDisplayUnits,
+  displayUnitsToDenomUnits} from '@cosmology/core'
+
 
 function SwapContainer(props) {
   const {swapContextValue, setSwapContextValue} = useContext(SwapContext)
@@ -51,13 +55,12 @@ function SwapContainer(props) {
     setBalanceAssetTo(null)
     pr.getBalance(keplrValue?.accounts[0].address, swapContextValue.assetFrom.token)
     .then(function (balance) {
-      exponent = Math.pow(10,tp.assets[swapContextValue.assetFrom.token].exponent)
-      let expBalance = balance?balance/exponent:0
+      let expBalance = balance?baseUnitsToDisplayUnits(swapContextValue.assetFrom.token, balance):0
       let roundedBalance = expBalance
       if(expBalance&&expBalance>1){
-        roundedBalance = Math.round(expBalance*100)/100
+        roundedBalance = new IntPretty(expBalance).maxDecimals(2).toString()
       }else{
-        roundedBalance = Math.round(expBalance*1000000)/1000000
+        roundedBalance = expBalance===0?expBalance:new IntPretty(expBalance).maxDecimals(6).toString()
       }
       setBalanceAssetFrom(roundedBalance)
     })

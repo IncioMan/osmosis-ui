@@ -1,4 +1,6 @@
 import {assetsList} from '../data/assets'
+import {baseUnitsToDisplayUnits,
+    displayUnitsToDenomUnits} from '@cosmology/core'
 
 export default class TokenProvider{
     constructor() {
@@ -14,12 +16,10 @@ export default class TokenProvider{
     }
 
     formatAmount(token, amount){
-        const div = Math.pow(10,this.assets[token].exponent)
-        return amount/div
+        return baseUnitsToDisplayUnits(token, amount)
     }
 
     valueToDenomPrecision(token,value){
-        const factor = Math.pow(10,this.assets[token].exponent)
-        return value * factor
+        return displayUnitsToDenomUnits(token, value)
     }
 }
