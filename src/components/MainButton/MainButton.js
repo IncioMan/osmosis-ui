@@ -93,7 +93,7 @@ function MainButton(props) {
       setOnClick([(e)=>{
         setWaiting(true)
         const sp = new SwapProvider(keplrValue.accounts[0], 
-                                    keplrValue.wallet.getOfflineSigner('osmo-test-4'),
+                                    keplrValue.wallet.getOfflineSignerOnlyAmino(networkValue.chainId),
                                     networkValue.lcd,
                                     networkValue.rpc)
         const res = sp.swap(swapContextValue.assetFrom.token,swapContextValue.assetTo.token, swapContextValue.assetFrom.amount)
