@@ -116,22 +116,22 @@ function OsmoApp() {
                         backdropFilter='blur(10px)'
                         />
                     <ModalContent>
-                    <ModalHeader>Disclaimer</ModalHeader>
+                    <ModalHeader bg='blackAlpha.700'>Disclaimer</ModalHeader>
                     <ModalCloseButton />
-                    <ModalBody>
-                        <Text>
+                    <ModalBody bg='blackAlpha.700'>
+                        <Text color={'white'}>
                             The code for this interface has not been audited and is simply the result
                             of my passion for both programming and Osmosis.
                         </Text>
-                        <Text>
+                        <Text color={'white'}>
                             I decline any responsability for funds lost or swapped to wrong assets.
                             Always double check the transaction before signing it. 
                         </Text>
-                        <Text>
+                        <Text color={'white'}>
                         Use at your own risk.
                         </Text>
                     </ModalBody>
-                    <ModalFooter>
+                    <ModalFooter bg='blackAlpha.700'>
                     </ModalFooter>
                     </ModalContent>
                 </Modal>
