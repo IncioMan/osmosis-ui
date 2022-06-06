@@ -105,7 +105,7 @@ function SwapContainer(props) {
         amount: swapContextValue.assetFrom.amount,
       },
       assetTo: {
-        token: swapContextValue.assetFrom
+        token: swapContextValue.assetFrom.token
       },
       slippage: swapContextValue.slippage
     }
