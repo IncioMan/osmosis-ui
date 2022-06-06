@@ -153,7 +153,7 @@ function OsmoApp() {
                             </Box>
                         </Box>
                         </Flex>
-                        <Box position={'absolute'} w={'100%'} top={[4,8,12]} right={[4,8,12]}>
+                        <Box position={'absolute'} w={'90%'} top={[4,8,12]} right={[4,8,12]}>
                             <FormControl display='flex' alignItems='center' justifyContent={'end'}>
                                 <FormLabel htmlFor='emaeil-alerts' mb='0'>
                                     Mainnet
@@ -173,7 +173,7 @@ function OsmoApp() {
                         <Flex 
                             justifyContent={'start'}
                             position={'absolute'} 
-                            w={'100%'} 
+                            w={'90%'} 
                             bottom={[4,8,12]} 
                             left={[4,8,12]}>
                             <Link href='https://twitter.com/IncioMan' isExternal>
