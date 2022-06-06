@@ -146,8 +146,8 @@ export default class SwapProvider{
         return res
     }
 
-    async getTxInfo(txHash){
-        const cs = new CosmosApiClient({url:'https://testnet-rest.osmosis.zone/'});
+    async getTxInfo(txHash, restUrl){
+        const cs = new CosmosApiClient({url:restUrl});
         const txInfo = await cs.getTransaction(txHash)
         return txInfo
     }

@@ -99,7 +99,7 @@ function MainButton(props) {
                                     networkValue.chainId)
         const res = sp.swap(swapContextValue.assetFrom.token,swapContextValue.assetTo.token, swapContextValue.assetFrom.amount)
         res.then((r)=>{
-            sp.getTxInfo(r.transactionHash)
+            sp.getTxInfo(r.transactionHash, networkValue.lcd)
               .then((txInfo)=>{
                 console.log(txInfo)
                 if(!txInfo.logs){

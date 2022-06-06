@@ -1,6 +1,7 @@
 import {assetsList} from '../data/assets'
 import {baseUnitsToDisplayUnits,
     displayUnitsToDenomUnits} from '@cosmology/core'
+import { Dec, Int, IntPretty } from '@keplr-wallet/unit';
 
 export default class TokenProvider{
     constructor() {
@@ -16,7 +17,7 @@ export default class TokenProvider{
     }
 
     formatAmount(token, amount){
-        return baseUnitsToDisplayUnits(token, amount)
+        return new IntPretty(baseUnitsToDisplayUnits(token, amount)).maxDecimals(6).toString()
     }
 
     valueToDenomPrecision(token,value){

@@ -124,11 +124,11 @@ function OsmoApp() {
                             of my passion for both programming and Osmosis.
                         </Text>
                         <Text>
-                            I decline any responsability in funds lost or swapped to wrong assets.
-                            Use at your own risk.
+                            I decline any responsability for funds lost or swapped to wrong assets.
+                            Always double check the transaction before signing it. 
                         </Text>
                         <Text>
-                        Always double check the transaction before signing it.
+                        Use at your own risk.
                         </Text>
                     </ModalBody>
                     <ModalFooter>
