@@ -123,7 +123,7 @@ function SwapContainer(props) {
         amount: amount
       },
       assetTo: {
-        token: swapContextValue.assetTo
+        token: swapContextValue.assetTo.token
       },
       slippage: swapContextValue.slippage
     }
