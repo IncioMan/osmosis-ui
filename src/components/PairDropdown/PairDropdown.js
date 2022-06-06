@@ -100,14 +100,16 @@ export default function PairDropdown() {
     const setState = (pair) => {
         setAppStage('inputAmount')
         setSwapContextValue(
-            {assetFrom:{
+        {
+            assetFrom:{
                 token: pair.from.symbol,
                 amount: swapContextValue.assetFrom.amount
             },
             assetTo: {
                 token: pair.to.symbol
-            }}
-        )
+            },
+            slippage: swapContextValue.slippage
+        })
     }
 
     return (

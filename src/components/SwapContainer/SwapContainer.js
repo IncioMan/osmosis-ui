@@ -104,7 +104,10 @@ function SwapContainer(props) {
         token: swapContextValue.assetTo.token,
         amount: swapContextValue.assetFrom.amount,
       },
-      assetTo: swapContextValue.assetFrom
+      assetTo: {
+        token: swapContextValue.assetFrom
+      },
+      slippage: swapContextValue.slippage
     }
     setSwapContextValue(newState)
   }
@@ -119,7 +122,10 @@ function SwapContainer(props) {
         token: swapContextValue.assetFrom.token,
         amount: amount
       },
-      assetTo: swapContextValue.assetTo
+      assetTo: {
+        token: swapContextValue.assetTo
+      },
+      slippage: swapContextValue.slippage
     }
     setSwapContextValue(newState)
   }

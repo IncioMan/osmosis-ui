@@ -10,7 +10,7 @@ import KeplrContext from './context/KeplrContext';
 import NetworkContext from './context/NetworkContext';
 import { useSearchParams } from 'react-router-dom';
 import { useToast } from '@chakra-ui/react'
-import { Switch, FormControl, FormLabel} from '@chakra-ui/react'
+import { Switch, FormControl, FormLabel, Input} from '@chakra-ui/react'
 import { Icon,Link } from '@chakra-ui/react'
 import { FaTwitter, FaGithub } from 'react-icons/fa'
 import {
@@ -91,7 +91,8 @@ function OsmoApp() {
         },
         assetTo: {
             token: searchParams.get("to")?searchParams.get("to"):'ATOM',
-        }
+        },
+        slippage: 1
     }
     const [swapContextValue, setSwapContextValue] = useState(initialSwapContext)
 
@@ -137,6 +138,21 @@ function OsmoApp() {
                 </Modal>
     }
 
+    const setSlippage = (slippage)=>{
+        const context = 
+        {
+            assetFrom:{
+                token: swapContextValue.assetFrom.token,
+                amount: swapContextValue.assetFrom.amount
+            },
+            assetTo: {
+                token: swapContextValue.assetTo.token,
+            },
+            slippage: slippage
+        }
+        setSwapContextValue(context)
+    }
+
     return (
     <AppStageContext.Provider value={{appStage, setAppStage}}>
         <SwapContext.Provider value={{swapContextValue, setSwapContextValue}}>
@@ -159,6 +175,7 @@ function OsmoApp() {
                                     Mainnet
                                 </FormLabel>
                                 <Switch id='email-alerts'
+                                        width={14}
                                         colorScheme={'gray'}
                                         onChange={(e)=>{
                                             if(e.target.checked){
@@ -168,6 +185,27 @@ function OsmoApp() {
                                             }
                                         }} 
                                         value={true}/>
+                            </FormControl>
+                            <FormControl display='flex' alignItems='center' justifyContent={'end'}>
+                                <FormLabel htmlFor='emaeil-alerts' mb='0'>
+                                    Slippage (%)
+                                </FormLabel>
+                                <Input value={swapContextValue.slippage} 
+                                       width={14} 
+                                       border={'none'}
+                                       borderBottom={'solid'}
+                                       borderRadius={0}
+                                       outline={'none'}
+                                       boxShadow='none !important'
+                                       type={'number'}
+                                       onChange={(e)=>{
+                                        if(e.target.value){
+                                            setSlippage(e.target.value)
+                                        }else{
+                                            setSlippage('')
+                                        }
+                                    }}>
+                                </Input>
                             </FormControl>
                         </Box>
                         <Flex 

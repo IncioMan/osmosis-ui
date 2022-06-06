@@ -40,7 +40,8 @@ function MainButton(props) {
       },
       assetTo:{
         token: swapContextValue.assetTo.token
-      }
+      },
+      slippage: swapContextValue.slippage
     }
     setSwapContextValue(newState)
   }
@@ -97,7 +98,10 @@ function MainButton(props) {
                                     networkValue.lcd,
                                     networkValue.rpc,
                                     networkValue.chainId)
-        const res = sp.swap(swapContextValue.assetFrom.token,swapContextValue.assetTo.token, swapContextValue.assetFrom.amount)
+        const res = sp.swap(swapContextValue.assetFrom.token,
+                            swapContextValue.assetTo.token, 
+                            swapContextValue.assetFrom.amount,
+                            swapContextValue.slippage)
         res.then((r)=>{
             sp.getTxInfo(r.transactionHash, networkValue.lcd)
               .then((txInfo)=>{

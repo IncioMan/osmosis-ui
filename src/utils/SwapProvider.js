@@ -35,8 +35,8 @@ export default class SwapProvider{
         this.tokenProvider = new TokenProvider()
     }
 
-   async swap(sell, buy, value){
-        const slippage = 0.1
+   async swap(sell, buy, value, slip){
+        const slippage = slip
         const stargateClient = await getSigningOsmosisClient({
             //https://rpc.osmosis.zone/
             rpcEndpoint: this.rpcUrl,
