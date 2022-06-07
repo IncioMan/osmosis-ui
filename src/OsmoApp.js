@@ -172,22 +172,6 @@ function OsmoApp() {
                         <Box position={'absolute'} w={'90%'} top={[4,8,12]} right={[4,8,12]}>
                             <FormControl display='flex' alignItems='center' justifyContent={'end'}>
                                 <FormLabel htmlFor='emaeil-alerts' mb='0'>
-                                    Mainnet
-                                </FormLabel>
-                                <Switch id='email-alerts'
-                                        width={14}
-                                        colorScheme={'gray'}
-                                        onChange={(e)=>{
-                                            if(e.target.checked){
-                                                setNetworkValue(mainnet)
-                                            }else{
-                                                setNetworkValue(testnet)
-                                            }
-                                        }} 
-                                        value={true}/>
-                            </FormControl>
-                            <FormControl display='flex' alignItems='center' justifyContent={'end'}>
-                                <FormLabel htmlFor='emaeil-alerts' mb='0'>
                                     Slippage (%)
                                 </FormLabel>
                                 <Input value={swapContextValue.slippage} 
