@@ -45,7 +45,7 @@ function OsmoApp() {
         rpc: 'https://testnet-rpc.osmosis.zone/', 
         lcd: 'https://testnet-rest.osmosis.zone/'
     }
-    const [networkValue, setNetworkValue] = useState(testnet)
+    const [networkValue, setNetworkValue] = useState(mainnet)
     const toast = useToast()
 
     window.onload = async () =>
@@ -62,6 +62,7 @@ function OsmoApp() {
             const offlineSigner = window.keplr.getOfflineSigner(chainId);
             accounts = await offlineSigner.getAccounts();
         }catch(e){
+            console.log(e)
             toast({
             title: 'No address detected',
             description: 'You need to log into your Keplr extension and reload the page',
@@ -170,6 +171,22 @@ function OsmoApp() {
                         </Box>
                         </Flex>
                         <Box position={'absolute'} w={'90%'} top={[4,8,12]} right={[4,8,12]}>
+                            <FormControl display='flex' alignItems='center' justifyContent={'end'}>
+                                <FormLabel htmlFor='emaeil-alerts' mb='0'>
+                                    Mainnet
+                                </FormLabel>
+                                <Switch id='network'
+                                        width={14}
+                                        colorScheme={'gray'}
+                                        onChange={(e)=>{
+                                            if(e.target.checked){
+                                                setNetworkValue(mainnet)
+                                            }else{
+                                                setNetworkValue(testnet)
+                                            }
+                                        }} 
+                                        defaultChecked={true}/>
+                            </FormControl>
                             <FormControl display='flex' alignItems='center' justifyContent={'end'}>
                                 <FormLabel htmlFor='emaeil-alerts' mb='0'>
                                     Slippage (%)
