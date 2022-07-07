@@ -56,7 +56,7 @@ export default class SwapProvider{
         //const tokenInAmount = value ? balances.find((a) => a.symbol === sell).amount : dollarValueToDenomUnits(prices, sell, value);
         const tokenInAmount = this.tokenProvider.valueToDenomPrecision(sell, value)
         const tokenOutPrice = getPrice(prices, buy);
-        const tokenOutAmount = dollarValueToDenomUnits(prices, buy, tokenInPrice*tokenInAmount);
+        const tokenOutAmount = dollarValueToDenomUnits(prices, buy, tokenInPrice*value);
         const tokenOutAmountWithSlippage = calculateAmountWithSlippage(
         tokenOutAmount,
         slippage
